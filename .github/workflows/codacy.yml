@@ -1,10 +1,14 @@
-name: Codacy Security scan
+name: Codacy Security Scan
 
 on:
   push:
-    branches: [ "master", "main"]
+    branches: 
+      - "master"
+      - "main"
   pull_request:
-    branches: [ "master", "main"]
+    branches: 
+      - "master"
+      - "main"
 
 jobs:
   codacy-security-scan:
@@ -12,18 +16,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@main
+        uses: actions/checkout@v3
 
       - name: Run Codacy Analysis CLI
-        uses: codacy/codacy-analysis-cli-action!master
+        uses: codacy/codacy-analysis-cli-action@v5
         with:
           api-token: ${{ secrets.CODACY_API_TOKEN }}
           output: results.sarif
           format: sarif
           gh-code-scanning-compat: true
-          max-allowed-issues: 2147483547
+          max-allowed-issues: 100 # Set to a manageable value for your project
 
       - name: Upload Sarif Results File
-        uses: github/codeql-action/upload-sarif@main
+        uses: github/codeql-action/upload-sarif@v2
         with:
           sarif_file: results.sarif
