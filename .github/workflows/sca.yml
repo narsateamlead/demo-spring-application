@@ -16,7 +16,7 @@ jobs:
           chmod +x dependency-check/bin/dependency-check.sh
 
       - name: Run OWASP Dependency Check (Java)
-        run: ./dependency-check/bin/dependency-check.sh --scan . --format HTML --out report.html
+        run: ./dependency-check/bin/dependency-check.sh --scan . --format HTML --out report.html --disableAssembly
 
       - name: Install Snyk CLI
         run: npm install -g snyk
